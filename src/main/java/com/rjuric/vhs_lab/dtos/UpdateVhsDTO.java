@@ -1,21 +1,18 @@
 package com.rjuric.vhs_lab.dtos;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 public class UpdateVhsDTO {
 
-    @NotNull(message = "Id is required")
+    @NotNull(message = "id is required")
+    @Positive(message = "id needs to be positive")
     private Long id;
 
-    @NotNull(message = "Name is required.")
-    @NotEmpty(message = "Name should not be empty.")
+    @NotBlank(message = "name should not be blank")
     private String name;
 
-    @NotNull(message = "Description is required.")
-    @NotEmpty(message = "Description should not be empty.")
-    @Size(min=20, max=120, message = "Description should be between 20 and 120 characters long.")
+    @NotBlank(message = "description should not be blank")
+    @Size(min=20, max=120, message = "description should be between 20 and 120 characters long")
     private String description;
 
     public Long getId() {

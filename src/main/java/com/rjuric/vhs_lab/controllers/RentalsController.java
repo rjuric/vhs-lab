@@ -1,8 +1,15 @@
 package com.rjuric.vhs_lab.controllers;
 
+import com.rjuric.vhs_lab.dtos.CreateRentalDTO;
+import com.rjuric.vhs_lab.dtos.UpdateRentalDTO;
+import com.rjuric.vhs_lab.entities.Rental;
 import com.rjuric.vhs_lab.services.RentalsService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/rentals")
@@ -11,33 +18,37 @@ public class RentalsController {
     @Autowired
     private RentalsService rentalsService;
 
-    // TODO: Implement
     @GetMapping
-    public String getAll() {
+    public List<Rental> getAll() {
         return rentalsService.getAll();
     }
 
-    // TODO: Implement
     @GetMapping("/{id}")
-    public String getById(@PathVariable long id) {
+    public Rental getById(@PathVariable long id) {
         return rentalsService.getById(id);
     }
 
-    // TODO: Implement
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public String create() {
-        return rentalsService.create();
+    public Rental create(@Valid @RequestBody CreateRentalDTO body) {
+        return rentalsService.create(body.getVhsId(), body.getUserId(), body.getStartDate(), body.getEndDate());
     }
 
-    // TODO: Implement
     @PutMapping
-    public String update() {
-        return rentalsService.update();
+    public Rental update(@Valid @RequestBody UpdateRentalDTO body) {
+        return rentalsService.update(
+                body.getId(),
+                body.getVhsId(),
+                body.getUserId(),
+                body.getStartDate(),
+                body.getEndDate()
+        );
     }
 
-    // TODO: Implement
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable long id) {
-        return rentalsService.delete(id);
+    public void delete(@PathVariable long id) {
+        rentalsService.delete(id);
     }
 }

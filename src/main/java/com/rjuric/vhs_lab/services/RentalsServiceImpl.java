@@ -1,32 +1,48 @@
 package com.rjuric.vhs_lab.services;
 
+import com.rjuric.vhs_lab.entities.Rental;
+import com.rjuric.vhs_lab.repository.RentalsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class RentalsServiceImpl implements RentalsService {
 
+    @Autowired
+    private RentalsRepository repository;
+
     @Override
-    public String getAll() {
-        return "All of the rental data.";
+    public List<Rental> getAll() {
+        return repository.findAll();
     }
 
     @Override
-    public String getById(long id) {
-        return "This one specific rental with id: " + id;
+    public Rental getById(long id) {
+        return repository.findById(id).orElse(null);
     }
 
     @Override
-    public String create() {
-        return "Created a rental.";
+    public Rental create(long vhsId, long userId, Date startDate, Date endDate) {
+        Rental entity = new Rental(startDate, endDate, userId, vhsId);
+        return repository.save(entity);
     }
 
     @Override
-    public String update() {
-        return "Updated a rental.";
+    public Rental update(long id, long vhsId, long userId, Date startDate, Date endDate) {
+        Rental entity = new Rental();
+        entity.setVhsId(vhsId);
+        entity.setUserId(userId);
+        entity.setStartDate(startDate);
+        entity.setEndDate(endDate);
+        entity.setId(id);
+        return repository.save(entity);
     }
 
     @Override
-    public String delete(long id) {
-        return "Deleted a rental with id: " + id;
+    public void delete(long id) {
+        repository.deleteById(id);
     }
 }

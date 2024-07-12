@@ -1,13 +1,18 @@
 package com.rjuric.vhs_lab.services;
 
+import com.rjuric.vhs_lab.entities.Rental;
+
+import java.util.Date;
+import java.util.List;
+
 public interface RentalsService {
-    String getAll();
+    List<Rental> getAll();
 
-    String getById(long id);
+    Rental getById(long id);
 
-    String create();
+    Rental create(long vhsId, long userId, Date startDate, Date endDate);
 
-    String update();
+    Rental update(long id, long vhsId, long userId, Date startDate, Date endDate);
 
-    String delete(long id);
+    void delete(long id);
 }
