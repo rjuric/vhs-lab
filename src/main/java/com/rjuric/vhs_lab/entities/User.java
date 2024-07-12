@@ -6,12 +6,16 @@ import jakarta.persistence.*;
 @Table(name="users")
 public class User extends BaseEntity {
 
-    @Column(name = "email", unique = true)
+    @Column(unique = true)
     private String email;
 
-    public User(String email) {
+    @Column
+    private String password;
+
+    public User(String email, String password) {
         super();
         this.email = email;
+        this.password = password;
     }
 
     public User() {
@@ -24,5 +28,13 @@ public class User extends BaseEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

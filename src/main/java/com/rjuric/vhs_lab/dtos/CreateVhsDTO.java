@@ -1,6 +1,7 @@
 package com.rjuric.vhs_lab.dtos;
 
 import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.Length;
 
 public class CreateVhsDTO {
 
@@ -8,7 +9,7 @@ public class CreateVhsDTO {
     private String name;
 
     @NotBlank(message = "description should not be blank")
-    @Size(min=20, max=120, message = "description should be between 20 and 120 characters long")
+    @Length(min=20, max=120, message = "description should be between 20 and 120 characters long")
     private String description;
 
     public String getName() {
