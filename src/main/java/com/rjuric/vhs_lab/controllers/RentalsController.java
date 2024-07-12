@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 public class RentalsController {
 
     // TODO: Implement
-    @GetMapping("/")
+    @GetMapping
     public String getAll() {
         return "No rentals available right now.";
     }
@@ -19,13 +19,13 @@ public class RentalsController {
     }
 
     // TODO: Implement
-    @PostMapping("/")
+    @PostMapping
     public String create() {
         return "Created a new rental";
     }
 
     // TODO: Implement
-    @PutMapping("/")
+    @PutMapping
     public String update() {
         return "Updated a rental";
     }

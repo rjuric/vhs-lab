@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 public class VhsController {
 
     // TODO: Implement
-    @GetMapping("/")
+    @GetMapping
     public String getAll() {
         return "No VHS available right now.";
     }
@@ -19,13 +19,13 @@ public class VhsController {
     }
 
     // TODO: Implement
-    @PostMapping("/")
+    @PostMapping
     public String create() {
         return "Created a new tape";
     }
 
     // TODO: Implement
-    @PutMapping("/")
+    @PutMapping
     public String update() {
         return "Updated a tape";
     }
