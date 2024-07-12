@@ -1,15 +1,16 @@
 package com.rjuric.vhs_lab.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name="vhs")
 public class Vhs extends BaseEntity {
 
-    @Column
+    @Column(nullable = false, length = 30)
     private String name;
 
-    @Column
+    @Column(nullable = false, length = 120)
     private String description;
 
     public Vhs(String name, String description) {
@@ -37,5 +38,13 @@ public class Vhs extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Vhs{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                "} " + super.toString();
     }
 }

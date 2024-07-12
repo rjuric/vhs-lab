@@ -1,8 +1,16 @@
 package com.rjuric.vhs_lab.controllers;
 
+import com.rjuric.vhs_lab.dtos.CreateVhsDTO;
+import com.rjuric.vhs_lab.dtos.UpdateVhsDTO;
+import com.rjuric.vhs_lab.entities.Vhs;
+import com.rjuric.vhs_lab.repository.VhsRepository;
 import com.rjuric.vhs_lab.services.VhsService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/vhs")
@@ -11,33 +19,30 @@ public class VhsController {
     @Autowired
     private VhsService vhsService;
 
-    // TODO: Implement
     @GetMapping
-    public String getAll() {
+    public List<Vhs> getAll() {
         return vhsService.getAll();
     }
 
-    // TODO: Implement
     @GetMapping("/{id}")
-    public String getById(@PathVariable long id) {
+    public Vhs getById(@PathVariable long id) {
         return vhsService.getById(id);
     }
 
-    // TODO: Implement
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public String create() {
-        return vhsService.create();
+    public Vhs create(@Valid @RequestBody CreateVhsDTO body) {
+        return vhsService.create(body.getName(), body.getDescription());
     }
 
-    // TODO: Implement
     @PutMapping
-    public String update() {
-        return vhsService.update();
+    public Vhs update(@Valid @RequestBody UpdateVhsDTO body) {
+        return vhsService.update(body.getId(), body.getName(), body.getDescription());
     }
 
-    // TODO: Implement
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable long id) {
-        return vhsService.delete(id);
+    public void delete(@PathVariable long id) {
+        vhsService.delete(id);
     }
 }
