@@ -1,38 +1,43 @@
 package com.rjuric.vhs_lab.controllers;
 
+import com.rjuric.vhs_lab.services.VhsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/vhs")
 public class VhsController {
 
+    @Autowired
+    private VhsService vhsService;
+
     // TODO: Implement
     @GetMapping
     public String getAll() {
-        return "No VHS available right now.";
+        return vhsService.getAll();
     }
 
     // TODO: Implement
     @GetMapping("/{id}")
     public String getById(@PathVariable long id) {
-        return "No VHS with " + id + " available right now.";
+        return vhsService.getById(id);
     }
 
     // TODO: Implement
     @PostMapping
     public String create() {
-        return "Created a new tape";
+        return vhsService.create();
     }
 
     // TODO: Implement
     @PutMapping
     public String update() {
-        return "Updated a tape";
+        return vhsService.update();
     }
 
     // TODO: Implement
     @DeleteMapping("/{id}")
     public String delete(@PathVariable long id) {
-        return "Deleted a tape";
+        return vhsService.delete(id);
     }
 }
