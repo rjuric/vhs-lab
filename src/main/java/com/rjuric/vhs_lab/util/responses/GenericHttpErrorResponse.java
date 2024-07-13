@@ -1,6 +1,6 @@
 package com.rjuric.vhs_lab.util.responses;
 
-public class AuthErrorResponse {
+public class GenericHttpErrorResponse {
 
     private String message;
     private int status;

@@ -3,6 +3,7 @@ package com.rjuric.vhs_lab.services;
 import com.rjuric.vhs_lab.entities.Rental;
 import com.rjuric.vhs_lab.entities.Vhs;
 import com.rjuric.vhs_lab.repository.RentalsRepository;
+import com.rjuric.vhs_lab.util.errors.AlreadyRentedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +26,14 @@ public class RentalsServiceImpl implements RentalsService {
         return repository.findById(id).orElse(null);
     }
 
-    // TODO: check if dates are already taken
     @Override
     public Rental create(long vhsId, long userId, Date startDate, Date endDate) {
+        boolean isAlreadyRented = repository.existsByStartDateAndEndDate(startDate, endDate);
+
+        if (isAlreadyRented) {
+            throw new AlreadyRentedException("rental already exists in specified period");
+        }
+
         Rental entity = new Rental(startDate, endDate, userId, vhsId);
         return repository.save(entity);
     }
