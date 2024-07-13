@@ -8,16 +8,19 @@ import java.util.Date;
 
 @Entity
 public class Rental extends BaseEntity {
-    @Column
+    @Column(nullable = false)
     private Date startDate;
 
-    @Column
+    @Column(nullable = false)
     private Date endDate;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH })
     @JoinColumn(name = "vhs_id")
     @JsonIgnore
     private Vhs vhs;
+
+    @Column(nullable = true)
+    private Date returnedAt;
 
     @Transient
     private Long vhsId;
@@ -102,6 +105,14 @@ public class Rental extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Date getReturnedAt() {
+        return returnedAt;
+    }
+
+    public void setReturnedAt(Date returnedAt) {
+        this.returnedAt = returnedAt;
     }
 
     @Override

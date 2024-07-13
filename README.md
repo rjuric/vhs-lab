@@ -8,22 +8,22 @@ We are creating a cutting edge VHS rental application management system for our 
 
 #### API
 1. Implement a VHS resource RESTful API over http. 
-Path to this resource should be: /api/vhs
+Path to this resource should be: /api/vhs ✅
 3. Implement CRUD RESTful API for Rental resource. 
-Path to this resource should be: /api/rental
+Path to this resource should be: /api/rental ✅
 #### JPA
-- Model VHS as JPA Entity
-- Model User as JPA Entity
-- Model Rental as JPA Entity
+- Model VHS as JPA Entity ✅
+- Model User as JPA Entity ✅
+- Model Rental as JPA Entity ✅
 #### Requirements
-- RentalController should accept needed user ID data, vhs ID data, and rental date(use form or PATH parameters) 
-- Make sure that the same vhs can't have multiple rentals on the same date
-- handle rental due dates and late fees
-- 4 HTTP methods should be implemented. (e.g. GET, POST, PUT and DELETE)
-- Use Spring Data JPA Repositories
+- RentalController should accept needed user ID data, vhs ID data, and rental date(use form or PATH parameters) ✅ 
+- Make sure that the same vhs can't have multiple rentals on the same date ✅
+- handle rental due dates and late fees ✅
+- 4 HTTP methods should be implemented. (e.g. GET, POST, PUT and DELETE) ✅
+- Use Spring Data JPA Repositories ✅
 - Use Slf4j Logback logging 
-- Implement @ExceptionHandler to catch and handle all exceptions
-- Use Bean Validation on RentalForm to validate requests to RentalController
+- Implement @ExceptionHandler to catch and handle all exceptions 
+- Use Bean Validation on RentalForm to validate requests to RentalController ✅
 - Customize error messages from REST controller with Message Source
 - Prepopulate database of choice (H2, Postgresql or any other non-Oracle database)
 - Create an automated test for functionality of choice 

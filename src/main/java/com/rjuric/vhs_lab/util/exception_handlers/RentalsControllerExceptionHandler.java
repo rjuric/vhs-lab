@@ -2,6 +2,7 @@ package com.rjuric.vhs_lab.util.exception_handlers;
 
 import com.rjuric.vhs_lab.controllers.RentalsController;
 import com.rjuric.vhs_lab.util.errors.AlreadyRentedException;
+import com.rjuric.vhs_lab.util.errors.RentalNotFoundOrAlreadyReturnedException;
 import com.rjuric.vhs_lab.util.responses.GenericHttpErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,4 +21,15 @@ public class RentalsControllerExceptionHandler {
 
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<GenericHttpErrorResponse> handleException(RentalNotFoundOrAlreadyReturnedException exc) {
+        GenericHttpErrorResponse response = new GenericHttpErrorResponse();
+
+        response.setMessage(exc.getMessage());
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
 }

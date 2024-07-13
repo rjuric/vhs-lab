@@ -1,6 +1,7 @@
 package com.rjuric.vhs_lab.services;
 
 import com.rjuric.vhs_lab.entities.Rental;
+import com.rjuric.vhs_lab.util.responses.RentalBill;
 
 import java.util.Date;
 import java.util.List;
@@ -15,4 +16,6 @@ public interface RentalsService {
     Rental update(long id, long vhsId, long userId, Date startDate, Date endDate);
 
     void delete(long id);
+
+    RentalBill returnVhs(long id, Long userId);
 }

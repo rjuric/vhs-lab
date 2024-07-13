@@ -1,9 +1,11 @@
 package com.rjuric.vhs_lab.controllers;
 
 import com.rjuric.vhs_lab.dtos.CreateRentalDTO;
+import com.rjuric.vhs_lab.dtos.ReturnRentalDTO;
 import com.rjuric.vhs_lab.dtos.UpdateRentalDTO;
 import com.rjuric.vhs_lab.entities.Rental;
 import com.rjuric.vhs_lab.services.RentalsService;
+import com.rjuric.vhs_lab.util.responses.RentalBill;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,11 @@ public class RentalsController {
     @PostMapping
     public Rental create(@Valid @RequestBody CreateRentalDTO body) {
         return rentalsService.create(body.getVhsId(), body.getUserId(), body.getStartDate(), body.getEndDate());
+    }
+
+    @PostMapping("/{id}/return")
+    public RentalBill rent(@PathVariable long id, @Valid @RequestBody ReturnRentalDTO body) {
+        return rentalsService.returnVhs(id, body.getUserId());
     }
 
     @PutMapping

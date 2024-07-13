@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
+import java.util.Optional;
 
 public interface RentalsRepository extends JpaRepository<Rental, Long> {
     @Query("""
@@ -16,4 +17,15 @@ public interface RentalsRepository extends JpaRepository<Rental, Long> {
            """)
     boolean existsByStartDateAndEndDate(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
+
+    @Query(value = """
+            UPDATE rental
+            SET returned_at = CURRENT_TIMESTAMP
+            WHERE id = :rentalId
+            AND user_id = :userId
+            AND returned_at IS NULL
+            RETURNING *
+            """,
+            nativeQuery = true)
+    Optional<Rental> setReturnedAndFetch(@Param("rentalId") long id, @Param("userId") long userId);
 }
