@@ -9,10 +9,10 @@ import java.util.List;
 @Table(name="users")
 public class User extends BaseEntity {
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column
+    @Column(nullable = false)
     @JsonIgnore
     private String password;
 

@@ -48,10 +48,10 @@ public class RentalsController {
                 body.getVhsId(),
                 body.getUserId(),
                 body.getStartDate(),
-                body.getEndDate()
+                body.getEndDate(),
+                body.getReturnedAt()
         );
     }
-
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")

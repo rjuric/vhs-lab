@@ -6,6 +6,7 @@ import com.rjuric.vhs_lab.entities.User;
 import com.rjuric.vhs_lab.services.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -16,6 +17,7 @@ public class AuthController {
     @Autowired
     private AuthService service;
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/sign-up")
     public User signUp(@Valid @RequestBody SignUpDTO body) {
         return service.create(body.getEmail(), body.getPassword());

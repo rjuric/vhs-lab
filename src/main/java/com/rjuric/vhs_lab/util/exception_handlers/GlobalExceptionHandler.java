@@ -1,5 +1,6 @@
 package com.rjuric.vhs_lab.util.exception_handlers;
 
+import com.rjuric.vhs_lab.util.responses.GenericHttpErrorResponse;
 import com.rjuric.vhs_lab.util.responses.ValidationErrorResponse;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;

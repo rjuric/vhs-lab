@@ -4,6 +4,7 @@ import com.rjuric.vhs_lab.entities.Rental;
 import com.rjuric.vhs_lab.entities.Vhs;
 import com.rjuric.vhs_lab.repository.RentalsRepository;
 import com.rjuric.vhs_lab.util.errors.AlreadyRentedException;
+import com.rjuric.vhs_lab.util.errors.RentalNotFoundException;
 import com.rjuric.vhs_lab.util.errors.RentalNotFoundOrAlreadyReturnedException;
 import com.rjuric.vhs_lab.util.responses.RentalBill;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RentalsServiceImpl implements RentalsService {
@@ -29,12 +29,12 @@ public class RentalsServiceImpl implements RentalsService {
 
     @Override
     public Rental getById(long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow(() -> new RentalNotFoundException("rental not found"));
     }
 
     @Override
     public Rental create(long vhsId, long userId, Date startDate, Date endDate) {
-        boolean isAlreadyRented = repository.existsByStartDateAndEndDate(startDate, endDate);
+        boolean isAlreadyRented = repository.existsByStartDateAndEndDate(vhsId, startDate, endDate);
 
         if (isAlreadyRented) {
             throw new AlreadyRentedException("rental already exists in specified period");
@@ -46,7 +46,9 @@ public class RentalsServiceImpl implements RentalsService {
 
     @Override
     public RentalBill returnVhs(long id, Long userId) {
-        Rental rental = repository.setReturnedAndFetch(id, userId).orElseThrow(RentalNotFoundOrAlreadyReturnedException::new);
+        Rental rental = repository
+                .setReturnedAndFetch(id, userId, new Date())
+                .orElseThrow(RentalNotFoundOrAlreadyReturnedException::new);
 
         LocalDate returnedAt = rental.getReturnedAt().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate endDate = rental.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -57,18 +59,10 @@ public class RentalsServiceImpl implements RentalsService {
     }
 
     @Override
-    public Rental update(long id, long vhsId, long userId, Date startDate, Date endDate) {
-        Rental entity = new Rental();
-
-        Vhs updatedVhs = new Vhs();
-        updatedVhs.setId(vhsId);
-
-        entity.setVhs(updatedVhs);
-        entity.setUserId(userId);
-        entity.setStartDate(startDate);
-        entity.setEndDate(endDate);
-        entity.setId(id);
-        return repository.save(entity);
+    public Rental update(long id, long vhsId, long userId, Date startDate, Date endDate, Date returnedAt) {
+        return repository
+                .update(id, vhsId, userId, startDate, endDate, returnedAt)
+                .orElseThrow(() -> new RentalNotFoundException("rental not found"));
     }
 
     @Override

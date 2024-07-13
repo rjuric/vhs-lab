@@ -2,6 +2,7 @@ package com.rjuric.vhs_lab.dtos;
 
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
 
 import java.util.Date;
@@ -27,6 +28,9 @@ public class UpdateRentalDTO {
     @NotNull(message = "endDate is required")
     @Future(message = "endDate needs to be in the future")
     private Date endDate;
+
+    @PastOrPresent(message = "returnedAt not allowed in the future")
+    private Date returnedAt;
 
     public UpdateRentalDTO() {}
 
@@ -68,5 +72,13 @@ public class UpdateRentalDTO {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Date getReturnedAt() {
+        return returnedAt;
+    }
+
+    public void setReturnedAt(Date returnedAt) {
+        this.returnedAt = returnedAt;
     }
 }

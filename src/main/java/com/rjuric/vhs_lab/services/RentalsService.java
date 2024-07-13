@@ -13,7 +13,7 @@ public interface RentalsService {
 
     Rental create(long vhsId, long userId, Date startDate, Date endDate);
 
-    Rental update(long id, long vhsId, long userId, Date startDate, Date endDate);
+    Rental update(long id, long vhsId, long userId, Date startDate, Date endDate, Date returnedAt);
 
     void delete(long id);
 

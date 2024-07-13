@@ -14,18 +14,43 @@ public interface RentalsRepository extends JpaRepository<Rental, Long> {
            FROM Rental r
            WHERE r.startDate <= :endDate
            AND r.endDate >= :startDate
+           AND r.vhs.id = :vhsId
            """)
-    boolean existsByStartDateAndEndDate(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+    boolean existsByStartDateAndEndDate(@Param("vhsId") long vhsId, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
 
     @Query(value = """
             UPDATE rental
-            SET returned_at = CURRENT_TIMESTAMP
+            SET returned_at = :returnedAt
             WHERE id = :rentalId
             AND user_id = :userId
             AND returned_at IS NULL
             RETURNING *
             """,
             nativeQuery = true)
-    Optional<Rental> setReturnedAndFetch(@Param("rentalId") long id, @Param("userId") long userId);
+    Optional<Rental> setReturnedAndFetch(
+            @Param("rentalId") long id,
+            @Param("userId") long userId,
+            @Param("returnedAt") Date returnedAt
+    );
+
+    @Query(value = """
+            UPDATE rental
+            SET start_date = :startDate,
+            end_date = :endDate,
+            returned_at = :returnedAt,
+            vhs_id = :vhsId,
+            user_id = :userId
+            WHERE id = :id
+            RETURNING *
+            """,
+            nativeQuery = true)
+    Optional<Rental> update(
+            @Param("id") long id,
+            @Param("vhsId") long vhsId,
+            @Param("userId") long userId,
+            @Param("startDate") Date startDate,
+            @Param("endDate") Date endDate,
+            @Param("returnedAt") Date returnedAt
+    );
 }

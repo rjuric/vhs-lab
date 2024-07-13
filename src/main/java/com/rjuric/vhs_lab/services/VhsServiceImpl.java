@@ -2,6 +2,7 @@ package com.rjuric.vhs_lab.services;
 
 import com.rjuric.vhs_lab.entities.Vhs;
 import com.rjuric.vhs_lab.repository.VhsRepository;
+import com.rjuric.vhs_lab.util.errors.VhsNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class VhsServiceImpl implements VhsService {
 
     @Override
     public Vhs getById(long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow(() -> new VhsNotFoundException("vhs not found"));
     }
 
     @Override
