@@ -1,5 +1,6 @@
 package com.rjuric.vhs_lab.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,6 +11,7 @@ public class User extends BaseEntity {
     private String email;
 
     @Column
+    @JsonIgnore
     private String password;
 
     public User(String email, String password) {

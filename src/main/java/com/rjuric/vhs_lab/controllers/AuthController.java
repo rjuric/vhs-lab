@@ -3,20 +3,29 @@ package com.rjuric.vhs_lab.controllers;
 import com.rjuric.vhs_lab.dtos.LoginDTO;
 import com.rjuric.vhs_lab.dtos.SignUpDTO;
 import com.rjuric.vhs_lab.entities.User;
-import com.rjuric.vhs_lab.services.UsersService;
+import com.rjuric.vhs_lab.services.AuthService;
+import com.rjuric.vhs_lab.util.errors.AuthException;
+import com.rjuric.vhs_lab.util.errors.UserNotFoundException;
+import com.rjuric.vhs_lab.util.responses.AuthErrorResponse;
+import com.rjuric.vhs_lab.util.responses.ValidationErrorResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
-    private UsersService service;
+    private AuthService service;
 
     @PostMapping("/sign-up")
     public User signUp(@Valid @RequestBody SignUpDTO body) {
