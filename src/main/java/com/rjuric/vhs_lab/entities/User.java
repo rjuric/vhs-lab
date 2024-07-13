@@ -3,6 +3,8 @@ package com.rjuric.vhs_lab.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="users")
 public class User extends BaseEntity {
@@ -13,6 +15,10 @@ public class User extends BaseEntity {
     @Column
     @JsonIgnore
     private String password;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Rental> rentals;
 
     public User(String email, String password) {
         super();

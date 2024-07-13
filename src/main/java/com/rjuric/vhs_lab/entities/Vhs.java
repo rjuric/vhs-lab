@@ -1,7 +1,9 @@
 package com.rjuric.vhs_lab.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
 
 @Entity
 @Table(name="vhs")
@@ -12,6 +14,10 @@ public class Vhs extends BaseEntity {
 
     @Column(nullable = false, length = 120)
     private String description;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "vhs")
+    private List<Rental> rentals;
 
     public Vhs(String name, String description) {
         super();
@@ -40,11 +46,20 @@ public class Vhs extends BaseEntity {
         this.description = description;
     }
 
+    public List<Rental> getRentals() {
+        return rentals;
+    }
+
+    public void setRentals(List<Rental> rentals) {
+        this.rentals = rentals;
+    }
+
     @Override
     public String toString() {
         return "Vhs{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", rentals=" + rentals +
                 "} " + super.toString();
     }
 }

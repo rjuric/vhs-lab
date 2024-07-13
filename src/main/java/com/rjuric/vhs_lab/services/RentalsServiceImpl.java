@@ -1,6 +1,7 @@
 package com.rjuric.vhs_lab.services;
 
 import com.rjuric.vhs_lab.entities.Rental;
+import com.rjuric.vhs_lab.entities.Vhs;
 import com.rjuric.vhs_lab.repository.RentalsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class RentalsServiceImpl implements RentalsService {
         return repository.findById(id).orElse(null);
     }
 
+    // TODO: check if dates are already taken
     @Override
     public Rental create(long vhsId, long userId, Date startDate, Date endDate) {
         Rental entity = new Rental(startDate, endDate, userId, vhsId);
@@ -33,7 +35,11 @@ public class RentalsServiceImpl implements RentalsService {
     @Override
     public Rental update(long id, long vhsId, long userId, Date startDate, Date endDate) {
         Rental entity = new Rental();
-        entity.setVhsId(vhsId);
+
+        Vhs updatedVhs = new Vhs();
+        updatedVhs.setId(vhsId);
+
+        entity.setVhs(updatedVhs);
         entity.setUserId(userId);
         entity.setStartDate(startDate);
         entity.setEndDate(endDate);
