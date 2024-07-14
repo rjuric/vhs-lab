@@ -29,13 +29,20 @@ Path to this resource should be: /api/rental ✅
 - Create an automated test for functionality of choice ✅
 
 
-#### UI or Postman collection
+#### UI or Postman collection ✅
 Create a simple postman collection for our VHS rental shop that will have these mandatory actions (put it in your git repository root folder):
 - VHS
   - List
   - VHS Rent and Return option
 - List of Rentals
 
+## Nice to haves TODO:
+1. Add Swagger
+2. Implement JWT authentication
+3. Add user roles and protect endpoints
+3. Dockerize the app
+4. Write integration tests using an in-memory db
+5. Set up a better migration and preloading tool
 
 # Guidance:
 
