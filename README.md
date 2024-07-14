@@ -25,8 +25,8 @@ Path to this resource should be: /api/rental ✅
 - Implement @ExceptionHandler to catch and handle all exceptions ✅ 
 - Use Bean Validation on RentalForm to validate requests to RentalController ✅
 - Customize error messages from REST controller with Message Source ✅
-- Prepopulate database of choice (H2, Postgresql or any other non-Oracle database)
-- Create an automated test for functionality of choice 
+- Prepopulate database of choice (H2, Postgresql or any other non-Oracle database) ✅
+- Create an automated test for functionality of choice ✅
 
 
 #### UI or Postman collection
