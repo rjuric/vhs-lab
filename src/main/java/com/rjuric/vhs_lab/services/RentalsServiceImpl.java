@@ -29,7 +29,7 @@ public class RentalsServiceImpl implements RentalsService {
 
     @Override
     public Rental getById(long id) {
-        return repository.findById(id).orElseThrow(() -> new RentalNotFoundException("rental not found"));
+        return repository.findById(id).orElseThrow(() -> new RentalNotFoundException("rental.notFound"));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class RentalsServiceImpl implements RentalsService {
         boolean isAlreadyRented = repository.existsByStartDateAndEndDate(vhsId, startDate, endDate);
 
         if (isAlreadyRented) {
-            throw new AlreadyRentedException("rental already exists in specified period");
+            throw new AlreadyRentedException("rental.conflict");
         }
 
         Rental entity = new Rental(startDate, endDate, userId, vhsId);
@@ -48,7 +48,7 @@ public class RentalsServiceImpl implements RentalsService {
     public RentalBill returnVhs(long id, Long userId) {
         Rental rental = repository
                 .setReturnedAndFetch(id, userId, new Date())
-                .orElseThrow(RentalNotFoundOrAlreadyReturnedException::new);
+                .orElseThrow(() -> new RentalNotFoundOrAlreadyReturnedException("rental.notFoundOrAlreadyExists"));
 
         LocalDate returnedAt = rental.getReturnedAt().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate endDate = rental.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -62,7 +62,7 @@ public class RentalsServiceImpl implements RentalsService {
     public Rental update(long id, long vhsId, long userId, Date startDate, Date endDate, Date returnedAt) {
         return repository
                 .update(id, vhsId, userId, startDate, endDate, returnedAt)
-                .orElseThrow(() -> new RentalNotFoundException("rental not found"));
+                .orElseThrow(() -> new RentalNotFoundException("rental.notFound"));
     }
 
     @Override

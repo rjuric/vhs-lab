@@ -28,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
         boolean isMatching = passwordEncoder.matches(password, user.getPassword());
 
         if (!isMatching) {
-            throw new AuthException("incorrect password");
+            throw new AuthException("auth.incorrectPassword");
         }
 
         return user;

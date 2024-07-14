@@ -4,8 +4,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public class ReturnRentalDTO {
-    @NotNull(message = "userId is required")
-    @Positive(message = "userId needs to be positive")
+    @NotNull(message = "{userId.notNull}")
+    @Positive(message = "{userId.positive}")
     private Long userId;
 
     public Long getUserId() {

@@ -1,11 +1,11 @@
 package com.rjuric.vhs_lab.util.responses;
 
 public class RentalBill {
-     long daysOverdue;
+     private long daysOverdue;
 
-     double totalFeeInUSD;
+     private double totalFeeInUSD;
 
-     int feePerDayInUSD;
+     private int feePerDayInUSD;
 
     public RentalBill(long daysOverdue, int feePerDayInUSD) {
         this.daysOverdue = daysOverdue;

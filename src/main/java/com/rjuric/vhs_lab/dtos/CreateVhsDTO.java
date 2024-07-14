@@ -5,11 +5,11 @@ import org.hibernate.validator.constraints.Length;
 
 public class CreateVhsDTO {
 
-    @NotBlank(message = "name should not be blank")
+    @NotBlank(message = "{name.notBlank}")
     private String name;
 
-    @NotBlank(message = "description should not be blank")
-    @Length(min=20, max=120, message = "description should be between 20 and 120 characters long")
+    @NotBlank(message = "{description.notBlank}")
+    @Length(min=20, max=120, message = "{description.length}")
     private String description;
 
     public String getName() {

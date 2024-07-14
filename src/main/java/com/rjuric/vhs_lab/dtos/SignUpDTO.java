@@ -6,12 +6,12 @@ import org.hibernate.validator.constraints.Length;
 
 public class SignUpDTO {
 
-    @NotBlank(message = "email should not be blank")
-    @Email(message = "email needs to be a valid email")
+    @NotBlank(message = "{email.notBlank}")
+    @Email(message = "{email.isEmail}")
     private String email;
 
-    @NotBlank(message = "password should not be blank")
-    @Length(min = 12, message = "password should be at least 12 characters long")
+    @NotBlank(message = "{password.notBlank}")
+    @Length(min = 12, message = "{password.length")
     private String password;
 
     public String getEmail() {

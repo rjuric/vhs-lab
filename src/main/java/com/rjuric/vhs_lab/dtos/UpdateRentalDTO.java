@@ -9,27 +9,27 @@ import java.util.Date;
 
 public class UpdateRentalDTO {
 
-    @NotNull(message = "id is required")
-    @Positive(message = "id needs to be positive")
+    @NotNull(message = "{id.notNull}")
+    @Positive(message = "{id.positive}")
     private Long id;
 
-    @NotNull(message = "userId is required")
-    @Positive(message = "userId needs to be positive")
+    @NotNull(message = "{userId.notNull}")
+    @Positive(message = "{userId.positive}")
     private Long userId;
 
-    @NotNull(message = "vhsId needs to be defined")
-    @Positive(message = "vhsId needs to be positive")
+    @NotNull(message = "{vhsId.notNull}")
+    @Positive(message = "{vhsId.positive}")
     private Long vhsId;
 
-    @NotNull(message = "startDate is required")
-    @Future(message = "startDate needs to be in the future")
+    @NotNull(message = "{startDate.notNull}")
+    @Future(message = "{startDate.future}")
     private Date startDate;
 
-    @NotNull(message = "endDate is required")
-    @Future(message = "endDate needs to be in the future")
+    @NotNull(message = "{endDate.notNull}")
+    @Future(message = "{endDate.future}")
     private Date endDate;
 
-    @PastOrPresent(message = "returnedAt not allowed in the future")
+    @PastOrPresent(message = "{returnedAt.pastOrPresent}")
     private Date returnedAt;
 
     public UpdateRentalDTO() {}

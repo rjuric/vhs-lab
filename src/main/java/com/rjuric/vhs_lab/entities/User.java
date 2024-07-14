@@ -1,8 +1,11 @@
 package com.rjuric.vhs_lab.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rjuric.vhs_lab.util.enums.Role;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity

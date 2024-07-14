@@ -20,7 +20,7 @@ public class VhsServiceImpl implements VhsService {
 
     @Override
     public Vhs getById(long id) {
-        return repository.findById(id).orElseThrow(() -> new VhsNotFoundException("vhs not found"));
+        return repository.findById(id).orElseThrow(() -> new VhsNotFoundException("vhs.notFound"));
     }
 
     @Override

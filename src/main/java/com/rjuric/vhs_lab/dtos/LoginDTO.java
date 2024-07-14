@@ -4,11 +4,11 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class LoginDTO {
-    @NotBlank(message = "email should not be blank")
-    @Email(message = "email needs to be a valid email")
+    @NotBlank(message = "{email.notBlank}")
+    @Email(message = "{email.isEmail}")
     private String email;
 
-    @NotBlank(message = "password should not be blank")
+    @NotBlank(message = "{password.notBlank}")
     private String password;
 
     public String getEmail() {
