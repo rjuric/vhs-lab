@@ -2,7 +2,6 @@ package com.rjuric.vhs_lab.services;
 
 import com.rjuric.vhs_lab.util.errors.AuthException;
 import com.rjuric.vhs_lab.entities.User;
-import com.rjuric.vhs_lab.util.errors.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,11 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    @Autowired
-    private UsersService usersService;
+    private final UsersService usersService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public AuthServiceImpl(UsersService usersService, PasswordEncoder passwordEncoder) {
+        this.usersService = usersService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public User create(String email, String password) {
         String hashedPassword = passwordEncoder.encode(password);

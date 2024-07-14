@@ -22,7 +22,7 @@ public class VhsControllerExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(VhsNotFoundException exc, Locale locale) {
-        log.error("VHS ERROR: ", exc.getMessage());
+        log.error("VHS ERROR: {}", exc.getMessage());
 
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 

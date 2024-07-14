@@ -10,8 +10,13 @@ import java.util.List;
 
 @Service
 public class VhsServiceImpl implements VhsService {
+
+    private final VhsRepository repository;
+
     @Autowired
-    private VhsRepository repository;
+    public VhsServiceImpl(VhsRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public List<Vhs> getAll() {

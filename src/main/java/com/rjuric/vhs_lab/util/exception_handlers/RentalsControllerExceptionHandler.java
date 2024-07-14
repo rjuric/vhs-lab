@@ -20,8 +20,12 @@ import java.util.Locale;
 @RestControllerAdvice(assignableTypes = {RentalsController.class})
 public class RentalsControllerExceptionHandler {
 
+    private final MessageSource messageSource;
+
     @Autowired
-    private MessageSource messageSource;
+    public RentalsControllerExceptionHandler(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(AlreadyRentedException exc, Locale locale) {

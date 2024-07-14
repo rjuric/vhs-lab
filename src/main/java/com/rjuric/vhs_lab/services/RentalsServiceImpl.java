@@ -19,8 +19,12 @@ import java.util.List;
 @Service
 public class RentalsServiceImpl implements RentalsService {
 
+    private final RentalsRepository repository;
+
     @Autowired
-    private RentalsRepository repository;
+    public RentalsServiceImpl(RentalsRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public List<Rental> getAll() {
@@ -55,7 +59,7 @@ public class RentalsServiceImpl implements RentalsService {
 
         long daysBetween = ChronoUnit.DAYS.between(endDate, returnedAt);
 
-        return new RentalBill(daysBetween > 0 ? daysBetween : 0);
+        return new RentalBill(daysBetween > 0 ? daysBetween : 0, 5);
     }
 
     @Override

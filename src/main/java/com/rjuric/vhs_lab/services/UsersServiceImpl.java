@@ -8,8 +8,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UsersServiceImpl implements UsersService {
+
+    private final UsersRepository repository;
+
     @Autowired
-    private UsersRepository repository;
+    public UsersServiceImpl(UsersRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public User create(String email, String password) {

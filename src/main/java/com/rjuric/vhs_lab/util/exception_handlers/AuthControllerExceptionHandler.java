@@ -19,8 +19,12 @@ import java.util.Locale;
 @RestControllerAdvice(assignableTypes = {AuthController.class})
 public class AuthControllerExceptionHandler {
 
+    private final MessageSource messageSource;
+
     @Autowired
-    private MessageSource messageSource;
+    public AuthControllerExceptionHandler(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(AuthException exc, Locale locale) {
