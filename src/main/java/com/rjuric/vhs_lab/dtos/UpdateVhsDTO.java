@@ -1,9 +1,11 @@
 package com.rjuric.vhs_lab.dtos;
 
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
+@Builder
 @Data
 public class UpdateVhsDTO {
 

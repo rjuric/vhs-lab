@@ -2,13 +2,14 @@ package com.rjuric.vhs_lab.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
+
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
@@ -24,10 +25,4 @@ public class Vhs extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "vhs")
     private List<Rental> rentals;
-
-    public Vhs(String name, String description) {
-        super();
-        this.name = name;
-        this.description = description;
-    }
 }

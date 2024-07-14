@@ -30,13 +30,13 @@ public class VhsServiceImpl implements VhsService {
 
     @Override
     public Vhs create(String name, String description) {
-        Vhs newVhs = new Vhs(name, description);
+        Vhs newVhs = Vhs.builder().name(name).description(description).build();
         return repository.save(newVhs);
     }
 
     @Override
     public Vhs update(Long id, String name, String description) {
-        Vhs entity = new Vhs(name, description);
+        Vhs entity = Vhs.builder().name(name).description(description).build();
         entity.setId(id);
         return repository.save(entity);
     }

@@ -21,7 +21,7 @@ Path to this resource should be: /api/rental ✅
 - handle rental due dates and late fees ✅
 - 4 HTTP methods should be implemented. (e.g. GET, POST, PUT and DELETE) ✅
 - Use Spring Data JPA Repositories ✅
-- Use Slf4j Logback logging 
+- Use Slf4j Logback logging ✅
 - Implement @ExceptionHandler to catch and handle all exceptions ✅ 
 - Use Bean Validation on RentalForm to validate requests to RentalController ✅
 - Customize error messages from REST controller with Message Source ✅
