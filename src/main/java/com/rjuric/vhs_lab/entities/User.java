@@ -1,13 +1,16 @@
 package com.rjuric.vhs_lab.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rjuric.vhs_lab.util.enums.Role;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Type;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@Data
 @Entity
 @Table(name="users")
 public class User extends BaseEntity {
@@ -26,26 +29,6 @@ public class User extends BaseEntity {
     public User(String email, String password) {
         super();
         this.email = email;
-        this.password = password;
-    }
-
-    public User() {
-        super();
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
     }
 }

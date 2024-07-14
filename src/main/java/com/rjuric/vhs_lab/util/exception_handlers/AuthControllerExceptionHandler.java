@@ -4,6 +4,7 @@ import com.rjuric.vhs_lab.controllers.AuthController;
 import com.rjuric.vhs_lab.util.errors.AuthException;
 import com.rjuric.vhs_lab.util.errors.UserNotFoundException;
 import com.rjuric.vhs_lab.util.responses.GenericHttpErrorResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Locale;
 
+@Slf4j
 @RestControllerAdvice(assignableTypes = {AuthController.class})
 public class AuthControllerExceptionHandler {
 
@@ -22,6 +24,8 @@ public class AuthControllerExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(AuthException exc, Locale locale) {
+        log.error("AUTH ERROR: {}", exc.getMessage());
+
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 
         response.setMessage(messageSource.getMessage("auth.incorrect.emailOrPassword", null, locale));
@@ -32,6 +36,8 @@ public class AuthControllerExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(UserNotFoundException exc, Locale locale) {
+        log.error("AUTH ERROR: {}", exc.getMessage());
+
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 
         response.setMessage(messageSource.getMessage("auth.incorrect.emailOrPassword", null, locale));
@@ -42,6 +48,8 @@ public class AuthControllerExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(DataIntegrityViolationException exc, Locale locale) {
+        log.error("AUTH ERROR: {}", exc.getMessage());
+
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 
         response.setMessage(messageSource.getMessage("auth.user.conflict", null, locale)); // in an ideal world we would send an email to the user

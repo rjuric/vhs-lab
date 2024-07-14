@@ -3,9 +3,13 @@ package com.rjuric.vhs_lab.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 @Entity
 public class Rental extends BaseEntity {
     @Column(nullable = false)
@@ -48,80 +52,10 @@ public class Rental extends BaseEntity {
         this.vhs = vhs;
     }
 
-    public Rental() {
-        super();
-    }
-
     @PostLoad
     @PostPersist
     public void setTransientFields() {
         this.vhsId = (vhs != null) ? vhs.getId() : null;
         this.userId = (user != null) ? user.getId() : null;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Vhs getVhs() {
-        return vhs;
-    }
-
-    public void setVhs(Vhs vhs) {
-        this.vhs = vhs;
-    }
-
-    public Long getVhsId() {
-        return vhsId;
-    }
-
-    public void setVhsId(Long vhsId) {
-        this.vhsId = vhsId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Date getReturnedAt() {
-        return returnedAt;
-    }
-
-    public void setReturnedAt(Date returnedAt) {
-        this.returnedAt = returnedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "Rental{" +
-                "user=" + user +
-                ", vhs=" + vhs +
-                ", endDate=" + endDate +
-                ", startDate=" + startDate +
-                "} " + super.toString();
     }
 }

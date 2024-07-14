@@ -22,9 +22,9 @@ Path to this resource should be: /api/rental ✅
 - 4 HTTP methods should be implemented. (e.g. GET, POST, PUT and DELETE) ✅
 - Use Spring Data JPA Repositories ✅
 - Use Slf4j Logback logging 
-- Implement @ExceptionHandler to catch and handle all exceptions 
+- Implement @ExceptionHandler to catch and handle all exceptions ✅ 
 - Use Bean Validation on RentalForm to validate requests to RentalController ✅
-- Customize error messages from REST controller with Message Source
+- Customize error messages from REST controller with Message Source ✅
 - Prepopulate database of choice (H2, Postgresql or any other non-Oracle database)
 - Create an automated test for functionality of choice 
 

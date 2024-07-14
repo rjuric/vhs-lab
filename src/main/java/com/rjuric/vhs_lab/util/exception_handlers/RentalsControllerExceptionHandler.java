@@ -5,7 +5,7 @@ import com.rjuric.vhs_lab.util.errors.AlreadyRentedException;
 import com.rjuric.vhs_lab.util.errors.RentalNotFoundException;
 import com.rjuric.vhs_lab.util.errors.RentalNotFoundOrAlreadyReturnedException;
 import com.rjuric.vhs_lab.util.responses.GenericHttpErrorResponse;
-import org.hibernate.JDBCException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Locale;
 
+@Slf4j
 @RestControllerAdvice(assignableTypes = {RentalsController.class})
 public class RentalsControllerExceptionHandler {
 
@@ -24,6 +25,8 @@ public class RentalsControllerExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(AlreadyRentedException exc, Locale locale) {
+        log.error("RENTALS ERROR: {}", exc.getMessage());
+
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 
         response.setMessage(messageSource.getMessage(exc.getMessage(), null, locale));
@@ -34,6 +37,8 @@ public class RentalsControllerExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(RentalNotFoundException exc, Locale locale) {
+        log.error("RENTALS ERROR: {}", exc.getMessage());
+
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 
         response.setMessage(messageSource.getMessage(exc.getMessage(), null, locale));
@@ -47,6 +52,8 @@ public class RentalsControllerExceptionHandler {
             RentalNotFoundOrAlreadyReturnedException exc,
             Locale locale
     ) {
+        log.error("RENTALS ERROR: {}", exc.getMessage());
+
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 
         response.setMessage(messageSource.getMessage(exc.getMessage(), null, locale));
@@ -57,6 +64,8 @@ public class RentalsControllerExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(DataIntegrityViolationException exc, Locale locale) {
+        log.error("RENTALS ERROR: {}", exc.getMessage());
+
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 
         response.setMessage(messageSource.getMessage("common.badRequest", null, locale));

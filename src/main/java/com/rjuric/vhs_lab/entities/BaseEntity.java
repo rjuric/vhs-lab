@@ -2,10 +2,11 @@ package com.rjuric.vhs_lab.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
+@Data
 @MappedSuperclass
 public abstract class BaseEntity {
 
@@ -32,30 +33,5 @@ public abstract class BaseEntity {
     @PreUpdate
     private void setUpdatedAt() {
         updatedAt = new Date();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "BaseEntity{" +
-                "id=" + id +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
     }
 }

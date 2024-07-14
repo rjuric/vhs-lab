@@ -1,8 +1,10 @@
 package com.rjuric.vhs_lab.dtos;
 
 import jakarta.validation.constraints.*;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
+@Data
 public class UpdateVhsDTO {
 
     @NotNull(message = "{id.notNull}")
@@ -15,28 +17,4 @@ public class UpdateVhsDTO {
     @NotBlank(message = "{description.notBlank}")
     @Length(min=20, max=120, message = "{description.length}")
     private String description;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

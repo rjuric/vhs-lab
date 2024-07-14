@@ -1,7 +1,7 @@
 package com.rjuric.vhs_lab.util.exception_handlers;
 
-import com.rjuric.vhs_lab.util.responses.GenericHttpErrorResponse;
 import com.rjuric.vhs_lab.util.responses.ValidationErrorResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.List;
 import java.util.Locale;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -22,6 +23,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ValidationErrorResponse> handleException(MethodArgumentNotValidException exc, Locale locale) {
+        log.error("VALIDATION ERROR: {}", exc.getMessage());
+
         ValidationErrorResponse response = new ValidationErrorResponse();
 
         List<String> mapped = exc
