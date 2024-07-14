@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name="vhs")
 public class Vhs extends BaseEntity {
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 60)
     private String name;
 
     @Column(nullable = false, length = 120)
