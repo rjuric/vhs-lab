@@ -2,6 +2,7 @@ package com.rjuric.vhs_lab.services;
 
 import com.rjuric.vhs_lab.entities.User;
 import com.rjuric.vhs_lab.repository.UsersRepository;
+import com.rjuric.vhs_lab.util.enums.Role;
 import com.rjuric.vhs_lab.util.errors.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public User create(String email, String password) {
-        User user = new User(email, password);
+    public User create(String email, String password, Role role) {
+        User user = new User(email, password, role);
 
         return repository.save(user);
     }

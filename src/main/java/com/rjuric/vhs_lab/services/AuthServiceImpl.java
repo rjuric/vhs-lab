@@ -1,30 +1,36 @@
 package com.rjuric.vhs_lab.services;
 
+import com.rjuric.vhs_lab.config.JwtService;
+import com.rjuric.vhs_lab.repository.UsersRepository;
+import com.rjuric.vhs_lab.util.enums.Role;
 import com.rjuric.vhs_lab.util.errors.AuthException;
 import com.rjuric.vhs_lab.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.rjuric.vhs_lab.util.responses.AuthenticationResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
     private final UsersService usersService;
     private final PasswordEncoder passwordEncoder;
+    private final UsersRepository repository;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    public AuthServiceImpl(UsersService usersService, PasswordEncoder passwordEncoder) {
-        this.usersService = usersService;
-        this.passwordEncoder = passwordEncoder;
-    }
-
-    public User create(String email, String password) {
+    public AuthenticationResponse create(String email, String password) {
         String hashedPassword = passwordEncoder.encode(password);
+        User savedUser = usersService.create(email, hashedPassword, Role.USER);
+        String token = jwtService.generateToken(savedUser);
 
-        return usersService.create(email, hashedPassword);
+        return AuthenticationResponse.builder().token(token).user(savedUser).build();
     }
 
-    public User findByEmailAndPassword(String email, String password) {
+    public AuthenticationResponse findByEmailAndPassword(String email, String password) {
         User user = usersService.findByEmail(email);
 
         boolean isMatching = passwordEncoder.matches(password, user.getPassword());
@@ -33,6 +39,9 @@ public class AuthServiceImpl implements AuthService {
             throw new AuthException("auth.incorrectPassword");
         }
 
-        return user;
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+        String token = jwtService.generateToken(user);
+
+        return AuthenticationResponse.builder().user(user).token(token).build();
     }
 }
