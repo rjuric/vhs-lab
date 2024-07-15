@@ -10,8 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -32,12 +31,12 @@ public class User extends BaseEntity implements UserDetails {
     private List<Rental> rentals;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role[] roles;
 
     public User(String email, String password, Role role) {
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.roles = new Role[]{ role };
     }
 
     // UserDetails
@@ -45,7 +44,7 @@ public class User extends BaseEntity implements UserDetails {
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return Arrays.stream(roles).map(role -> new SimpleGrantedAuthority(role.name())).toList();
     }
 
     @JsonIgnore

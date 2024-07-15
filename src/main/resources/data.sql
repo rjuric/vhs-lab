@@ -1,10 +1,10 @@
-INSERT INTO users (created_at, updated_at, email, password)
+INSERT INTO users (created_at, updated_at, email, password, roles)
 SELECT *
 FROM (
     VALUES
-        (NOW(), NOW(), 'user1@example.com', '$2a$10$vmQtY5Evl1OlywgTfQm3O.5tPtki1jwv1pWP8l/EtiisXBoLwR9.C'),
-        (NOW(), NOW(), 'user2@example.com', '$2a$10$.UBHeCDlzFDyZXZGMYT2uux4X5VxLvdyUNhPtoAXF7eDv1W0T2Z3O'),
-        (NOW(), NOW(), 'user3@example.com', '$2a$10$rudIfng.2lClKLeeMN5/q.pSHJTtSuae7A6NnXOx.SstPOmHVM/4W')
+        (NOW(), NOW(), 'user1@example.com', '$2a$10$vmQtY5Evl1OlywgTfQm3O.5tPtki1jwv1pWP8l/EtiisXBoLwR9.C', ARRAY['USER']::text[]),
+        (NOW(), NOW(), 'user2@example.com', '$2a$10$.UBHeCDlzFDyZXZGMYT2uux4X5VxLvdyUNhPtoAXF7eDv1W0T2Z3O', ARRAY['USER']::text[]),
+        (NOW(), NOW(), 'user3@example.com', '$2a$10$rudIfng.2lClKLeeMN5/q.pSHJTtSuae7A6NnXOx.SstPOmHVM/4W', ARRAY['USER', 'ADMIN']::text[])
     )
 WHERE NOT EXISTS (
     SELECT 1
