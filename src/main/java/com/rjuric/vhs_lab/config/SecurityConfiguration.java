@@ -29,16 +29,13 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/vhs/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/vhs/**").hasAuthority(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.PUT, "/vhs/**").hasAuthority(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.DELETE, "/vhs/**").hasAuthority(Role.ADMIN.name())
-                        .requestMatchers(HttpMethod.GET, "/rentals/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/rentals/**").hasAuthority(Role.USER.name())
                         .requestMatchers(HttpMethod.PUT, "/rentals/**").hasAuthority(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.DELETE, "/rentals/**").hasAuthority(Role.ADMIN.name())
-                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/").permitAll()
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
