@@ -5,22 +5,16 @@ import com.rjuric.vhs_lab.repository.UsersRepository;
 import com.rjuric.vhs_lab.util.enums.Role;
 import com.rjuric.vhs_lab.util.errors.UserNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService  {
 
     private final UsersRepository repository;
-
-    @Autowired
-    public UsersServiceImpl(UsersRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public User create(String email, String password, Role role) {

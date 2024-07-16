@@ -1,15 +1,9 @@
 package com.rjuric.vhs_lab.util.responses;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+public record RentalBill(long daysOverdue, int feePerDayInUSD) {
+    public static final int FEE_PER_DAY_IN_USD = 5;
 
-@AllArgsConstructor
-@Data
-public class RentalBill {
-     private long daysOverdue;
-     private int feePerDayInUSD = 5;
-
-     public long getTotalFeesInUsd() {
-         return daysOverdue * feePerDayInUSD;
-     }
+    public long getTotalFeesInUsd() {
+        return daysOverdue * feePerDayInUSD;
+    }
 }

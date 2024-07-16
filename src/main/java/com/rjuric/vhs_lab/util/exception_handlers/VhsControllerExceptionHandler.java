@@ -3,6 +3,7 @@ package com.rjuric.vhs_lab.util.exception_handlers;
 import com.rjuric.vhs_lab.controllers.VhsController;
 import com.rjuric.vhs_lab.util.errors.VhsNotFoundException;
 import com.rjuric.vhs_lab.util.responses.GenericHttpErrorResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -15,10 +16,10 @@ import java.util.Locale;
 
 @Slf4j
 @RestControllerAdvice(assignableTypes = {VhsController.class})
+@RequiredArgsConstructor
 public class VhsControllerExceptionHandler {
 
-    @Autowired
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(VhsNotFoundException exc, Locale locale) {

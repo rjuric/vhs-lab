@@ -29,7 +29,7 @@ public class RentalsControllerExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(AlreadyRentedException exc, Locale locale) {
-        log.error("RENTALS ERROR: {}", exc.getMessage());
+        logError(exc);
 
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 
@@ -41,7 +41,7 @@ public class RentalsControllerExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(RentalNotFoundException exc, Locale locale) {
-        log.error("RENTALS ERROR: {}", exc.getMessage());
+        logError(exc);
 
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 
@@ -56,7 +56,7 @@ public class RentalsControllerExceptionHandler {
             RentalNotFoundOrAlreadyReturnedException exc,
             Locale locale
     ) {
-        log.error("RENTALS ERROR: {}", exc.getMessage());
+        logError(exc);
 
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 
@@ -68,7 +68,7 @@ public class RentalsControllerExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(DataIntegrityViolationException exc, Locale locale) {
-        log.error("RENTALS ERROR: {}", exc.getMessage());
+        logError(exc);
 
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 
@@ -76,5 +76,9 @@ public class RentalsControllerExceptionHandler {
         response.setStatus(HttpStatus.BAD_REQUEST.value());
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    private void logError(RuntimeException exception) {
+        log.error("RENTALS ERROR: {}", exception.getMessage());
     }
 }

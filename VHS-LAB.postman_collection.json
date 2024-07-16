@@ -12,6 +12,9 @@
 				{
 					"name": "Get all",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -53,6 +56,16 @@
 				{
 					"name": "Create",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -82,6 +95,16 @@
 				{
 					"name": "Update",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -111,6 +134,16 @@
 				{
 					"name": "Delete by ID",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -137,6 +170,9 @@
 				{
 					"name": "Get all",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -184,11 +220,21 @@
 				{
 					"name": "Create",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"vhsId\": 2,\n    \"userId\": 1,\n    \"startDate\": \"2024-09-20\",\n    \"endDate\": \"2024-09-30\"\n}",
+							"raw": "{\n    \"vhsId\": 2,\n    \"startDate\": \"2024-09-20\",\n    \"endDate\": \"2024-09-30\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -213,11 +259,21 @@
 				{
 					"name": "Update",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": 10,\n    \"vhsId\": 1,\n    \"userId\": 3,\n    \"startDate\": \"2024-09-20\",\n    \"endDate\": \"2024-09-22\"\n}",
+							"raw": "{\n    \"id\": 3,\n    \"vhsId\": 1,\n    \"userId\": 3,\n    \"startDate\": \"2024-09-20\",\n    \"endDate\": \"2024-09-22\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -242,6 +298,16 @@
 				{
 					"name": "Delete by ID",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -263,11 +329,21 @@
 				{
 					"name": "Return",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": 1\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -298,6 +374,21 @@
 			"item": [
 				{
 					"name": "Sign Up",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"",
+									"pm.collectionVariables.set(\"access_token\", response.token);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -307,12 +398,13 @@
 							{
 								"key": "Accept-Language",
 								"value": "hr",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"email@email.com\",\n    \"password\": \"strongpassword\"\n}",
+							"raw": "{\n    \"email\": \"email@email.com\",\n    \"password\": \"testnipassword\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -337,18 +429,34 @@
 				},
 				{
 					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"",
+									"pm.collectionVariables.set(\"access_token\", response.token);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "Accept-Language",
 								"value": "hr",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"user1@example.com\",\n    \"password\": \"strongpassword\"\n}",
+							"raw": "{\n    \"email\": \"user3@example.com\",\n    \"password\": \"truenorth1950\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -376,6 +484,9 @@
 		{
 			"name": "Home",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -399,6 +510,16 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": "\"\""
+		},
+		{
+			"key": "access_token",
+			"value": ""
 		}
 	]
 }

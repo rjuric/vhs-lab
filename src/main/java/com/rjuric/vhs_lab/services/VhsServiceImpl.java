@@ -3,20 +3,16 @@ package com.rjuric.vhs_lab.services;
 import com.rjuric.vhs_lab.entities.Vhs;
 import com.rjuric.vhs_lab.repository.VhsRepository;
 import com.rjuric.vhs_lab.util.errors.VhsNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class VhsServiceImpl implements VhsService {
 
     private final VhsRepository repository;
-
-    @Autowired
-    public VhsServiceImpl(VhsRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public List<Vhs> getAll() {

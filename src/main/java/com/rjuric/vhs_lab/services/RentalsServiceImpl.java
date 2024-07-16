@@ -7,6 +7,7 @@ import com.rjuric.vhs_lab.util.errors.AlreadyRentedException;
 import com.rjuric.vhs_lab.util.errors.RentalNotFoundException;
 import com.rjuric.vhs_lab.util.errors.RentalNotFoundOrAlreadyReturnedException;
 import com.rjuric.vhs_lab.util.responses.RentalBill;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +18,10 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RentalsServiceImpl implements RentalsService {
 
     private final RentalsRepository repository;
-
-    @Autowired
-    public RentalsServiceImpl(RentalsRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public List<Rental> getAll() {
@@ -59,7 +56,7 @@ public class RentalsServiceImpl implements RentalsService {
 
         long daysBetween = ChronoUnit.DAYS.between(endDate, returnedAt);
 
-        return new RentalBill(daysBetween > 0 ? daysBetween : 0, 5);
+        return new RentalBill(daysBetween > 0 ? daysBetween : 0, RentalBill.FEE_PER_DAY_IN_USD);
     }
 
     @Override

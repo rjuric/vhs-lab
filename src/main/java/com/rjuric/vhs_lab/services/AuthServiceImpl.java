@@ -1,6 +1,5 @@
 package com.rjuric.vhs_lab.services;
 
-import com.rjuric.vhs_lab.repository.UsersRepository;
 import com.rjuric.vhs_lab.util.enums.Role;
 import com.rjuric.vhs_lab.util.errors.AuthException;
 import com.rjuric.vhs_lab.entities.User;

@@ -12,7 +12,7 @@ import java.util.function.Function;
 @Service
 @RequiredArgsConstructor
 public class JwtServiceImpl implements JwtService {
-
+    private static final int DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000;
     private final RsaKeysProperties keysProperties;
 
     public String extractUsername(String token) {
@@ -23,7 +23,7 @@ public class JwtServiceImpl implements JwtService {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + DAY_IN_MILLISECONDS))
                 .signWith(keysProperties.privateKey())
                 .compact();
     }

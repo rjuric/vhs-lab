@@ -14,7 +14,7 @@ public class CreateRentalDTO {
     private Long vhsId;
 
     @NotNull(message = "{startDate.notNull}")
-    @Future(message = "{startDate.future")
+    @Future(message = "{startDate.future}")
     private Date startDate;
 
     @NotNull(message = "{endDate.notNull}")

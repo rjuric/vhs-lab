@@ -12,6 +12,6 @@ public class SignUpDTO {
     private String email;
 
     @NotBlank(message = "{password.notBlank}")
-    @Length(min = 12, message = "{password.length")
+    @Length(min = 12, message = "{password.length}")
     private String password;
 }

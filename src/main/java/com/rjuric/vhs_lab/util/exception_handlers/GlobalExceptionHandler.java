@@ -3,6 +3,7 @@ package com.rjuric.vhs_lab.util.exception_handlers;
 import com.rjuric.vhs_lab.util.errors.UserNotFoundException;
 import com.rjuric.vhs_lab.util.responses.GenericHttpErrorResponse;
 import com.rjuric.vhs_lab.util.responses.ValidationErrorResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -18,14 +19,10 @@ import java.util.Locale;
 
 @Slf4j
 @RestControllerAdvice
+@RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
     private final MessageSource messageSource;
-
-    @Autowired
-    public GlobalExceptionHandler(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
 
     @ExceptionHandler
     public ResponseEntity<ValidationErrorResponse> handleException(MethodArgumentNotValidException exc, Locale locale) {

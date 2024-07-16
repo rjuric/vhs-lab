@@ -25,7 +25,7 @@ public class Rental extends BaseEntity {
     @JsonIgnore
     private Vhs vhs;
 
-    @Column(nullable = true)
+    @Column
     private Date returnedAt;
 
     @Transient

@@ -56,7 +56,8 @@ public class AuthControllerExceptionHandler {
 
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 
-        response.setMessage(messageSource.getMessage("auth.user.conflict", null, locale)); // in an ideal world we would send an email to the user
+        // in an ideal world we would not leak that the user already exists
+        response.setMessage(messageSource.getMessage("auth.user.conflict", null, locale));
         response.setStatus(HttpStatus.BAD_REQUEST.value());
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
