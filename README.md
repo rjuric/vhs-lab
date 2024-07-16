@@ -41,7 +41,7 @@ Create a simple postman collection for our VHS rental shop that will have these 
 2. Implement JWT authentication ✅
 3. Add user roles and protect endpoints ✅
 4. Set up a better migration and preloading tool
-5. Dockerize the app
+5. Dockerize the app ✅
 6. Write integration tests using an in-memory db
 
 # Guidance:
