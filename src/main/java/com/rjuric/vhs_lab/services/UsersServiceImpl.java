@@ -4,6 +4,7 @@ import com.rjuric.vhs_lab.entities.User;
 import com.rjuric.vhs_lab.repository.UsersRepository;
 import com.rjuric.vhs_lab.util.enums.Role;
 import com.rjuric.vhs_lab.util.errors.UserNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,5 +32,13 @@ public class UsersServiceImpl implements UsersService  {
     @Override
     public User findByEmail(String email) {
         return repository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("user.notFound"));
+    }
+
+    @Transactional
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = repository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("user.notFound"));
+        user.getRentals().size();
+        return user;
     }
 }

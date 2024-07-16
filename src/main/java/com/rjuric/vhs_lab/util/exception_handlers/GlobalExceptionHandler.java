@@ -1,5 +1,7 @@
 package com.rjuric.vhs_lab.util.exception_handlers;
 
+import com.rjuric.vhs_lab.util.errors.UserNotFoundException;
+import com.rjuric.vhs_lab.util.responses.GenericHttpErrorResponse;
 import com.rjuric.vhs_lab.util.responses.ValidationErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +44,17 @@ public class GlobalExceptionHandler {
         response.setStatus(HttpStatus.BAD_REQUEST.value());
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<GenericHttpErrorResponse> handleException(UserNotFoundException exc, Locale locale) {
+        log.error("USER NOT FOUND ERROR: {}", exc.getMessage());
+
+        return ResponseEntity
+                .badRequest()
+                .body(GenericHttpErrorResponse.builder()
+                        .message(messageSource.getMessage("user.notFound", null, locale))
+                        .status(HttpStatus.BAD_REQUEST.value())
+                        .build());
     }
 }

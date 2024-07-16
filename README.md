@@ -9,7 +9,7 @@ We are creating a cutting edge VHS rental application management system for our 
 #### API
 1. Implement a VHS resource RESTful API over http. 
 Path to this resource should be: /api/vhs ✅
-3. Implement CRUD RESTful API for Rental resource. 
+2. Implement CRUD RESTful API for Rental resource. 
 Path to this resource should be: /api/rental ✅
 #### JPA
 - Model VHS as JPA Entity ✅
@@ -37,12 +37,12 @@ Create a simple postman collection for our VHS rental shop that will have these 
 - List of Rentals
 
 ## Nice to haves TODO:
-1. Add Swagger
-2. Implement JWT authentication
-3. Add user roles and protect endpoints
-3. Dockerize the app
-4. Write integration tests using an in-memory db
-5. Set up a better migration and preloading tool
+1. Add Swagger ✅
+2. Implement JWT authentication ✅
+3. Add user roles and protect endpoints ✅
+4. Set up a better migration and preloading tool
+5. Dockerize the app
+6. Write integration tests using an in-memory db
 
 # Guidance:
 

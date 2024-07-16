@@ -9,11 +9,6 @@ import java.util.Date;
 
 @Data
 public class CreateRentalDTO {
-
-    @NotNull(message = "{userId.notNull}")
-    @Positive(message = "{userId.positive}")
-    private Long userId;
-
     @NotNull(message = "{vhsId.notNull}")
     @Positive(message = "{vhsId.positive}")
     private Long vhsId;

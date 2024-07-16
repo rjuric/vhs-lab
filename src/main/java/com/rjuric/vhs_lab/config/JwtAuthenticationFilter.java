@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.security.Principal;
 
 @Component(value = "jwtAuthenticationFilter")
 @RequiredArgsConstructor
