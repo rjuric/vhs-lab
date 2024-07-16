@@ -4,7 +4,7 @@ CREATE TABLE users (
     updated_at TIMESTAMP,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    roles TEXT
+    roles _VARCHAR
 );
 
 CREATE TABLE vhs (
