@@ -1,6 +1,7 @@
 package com.rjuric.vhs_lab.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rjuric.vhs_lab.config.JwtAuthenticationFilter;
 import com.rjuric.vhs_lab.dtos.CreateVhsDTO;
 import com.rjuric.vhs_lab.dtos.UpdateVhsDTO;
 import com.rjuric.vhs_lab.entities.Vhs;
@@ -32,6 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class VhsControllerTests {
     @MockBean
     VhsService vhsService;
+    @MockBean
+    JwtAuthenticationFilter filter;
 
     private ObjectMapper mapper = new ObjectMapper();
 

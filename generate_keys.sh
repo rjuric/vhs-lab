@@ -2,14 +2,12 @@
 
 echo "Generating keys..."
 
-cd ./src/main/resources/certs
+mkdir ./src/main/resources/certs/
+openssl genrsa -out ./src/main/resources/certs/keypair.pem 2048
+openssl rsa -in ./src/main/resources/certs/keypair.pem -pubout -out ./src/main/resources/certs/public.pem
+openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in ./src/main/resources/certs/keypair.pem -out ./src/main/resources/certs/private.pem
 
-openssl genrsa -out keypair.pem 2048
-openssl rsa -in keypair.pem -pubout -out public.pem
-openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in keypair.pem -out private.pem
+rm ./src/main/resources/certs/keypair.pem
 
-rm keypair.pem
-
-cd ../../../../
 
 echo "Keys generated."
