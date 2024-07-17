@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 
@@ -20,6 +22,7 @@ public class Rental extends BaseEntity {
     @Column(nullable = false)
     private Date endDate;
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH })
     @JoinColumn(name = "vhs_id")
     @JsonIgnore

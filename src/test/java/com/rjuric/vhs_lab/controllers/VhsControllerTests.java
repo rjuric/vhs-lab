@@ -5,6 +5,7 @@ import com.rjuric.vhs_lab.config.JwtAuthenticationFilter;
 import com.rjuric.vhs_lab.dtos.CreateVhsDTO;
 import com.rjuric.vhs_lab.dtos.UpdateVhsDTO;
 import com.rjuric.vhs_lab.entities.Vhs;
+import com.rjuric.vhs_lab.services.JwtServiceImpl;
 import com.rjuric.vhs_lab.services.VhsService;
 import com.rjuric.vhs_lab.util.errors.VhsNotFoundException;
 import org.hamcrest.CoreMatchers;
@@ -16,9 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 
@@ -29,17 +34,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc(addFilters = false)
 @RunWith(SpringRunner.class)
+@ActiveProfiles("test")
 @WebMvcTest(VhsController.class)
+@Import(JwtServiceImpl.class)
 public class VhsControllerTests {
     @MockBean
     VhsService vhsService;
-    @MockBean
-    JwtAuthenticationFilter filter;
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
+    private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
+
+    @Before
+    public void setUp() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
 
     private CreateVhsDTO createVhsDTO;
     private Vhs expectedVhs;
