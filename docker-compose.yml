@@ -2,12 +2,11 @@ version: '3.8'
 
 services:
   postgres:
-    env_file:
-      - .env.production
+    env_file: .env
     image: postgres:16.3
     container_name: postgres
     ports:
-      - "${DB_PORT}:5432"
+      - "${DB_PORT}:${DB_PORT}"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -15,8 +14,7 @@ services:
     build:
       context: .
     container_name: vhs_lab
-    env_file:
-      - .env.production
+    env_file: .env
     ports:
       - "8080:8080"
     depends_on:
