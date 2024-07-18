@@ -25,5 +25,5 @@ CREATE TABLE rental (
     user_id BIGINT,
     vhs_id BIGINT,
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (vhs_id) REFERENCES vhs(id)
+    FOREIGN KEY (vhs_id) REFERENCES vhs(id) ON DELETE CASCADE
 );

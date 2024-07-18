@@ -6,80 +6,89 @@ We are creating a cutting edge VHS rental application management system for our 
 
 ### VHS Rental Application
 
-#### API
-1. Implement a VHS resource RESTful API over http. 
-Path to this resource should be: /api/vhs ✅
-2. Implement CRUD RESTful API for Rental resource. 
-Path to this resource should be: /api/rental ✅
-#### JPA
-- Model VHS as JPA Entity ✅
-- Model User as JPA Entity ✅
-- Model Rental as JPA Entity ✅
-#### Requirements
-- RentalController should accept needed user ID data, vhs ID data, and rental date(use form or PATH parameters) ✅ 
-- Make sure that the same vhs can't have multiple rentals on the same date ✅
-- handle rental due dates and late fees ✅
-- 4 HTTP methods should be implemented. (e.g. GET, POST, PUT and DELETE) ✅
-- Use Spring Data JPA Repositories ✅
-- Use Slf4j Logback logging ✅
-- Implement @ExceptionHandler to catch and handle all exceptions ✅ 
-- Use Bean Validation on RentalForm to validate requests to RentalController ✅
-- Customize error messages from REST controller with Message Source ✅
-- Prepopulate database of choice (H2, Postgresql or any other non-Oracle database) ✅
-- Create an automated test for functionality of choice ✅
+## Prerequisites
+1. Have Docker installed and running
+2. In the root directory create and fill out `.env` and `.env.development` files. For example:
+```env
+POSTGRES_DB=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+DB_HOST=
+DB_PORT=
+API_PORT=
+```
+**Note**: 
+Make sure `DB_HOST` is set to `postgres` in the `.env` file, and `localhost` in the `.env.development` file.
 
+## Seeded data
+The database should be seeded with some data already.
 
-#### UI or Postman collection ✅
-Create a simple postman collection for our VHS rental shop that will have these mandatory actions (put it in your git repository root folder):
-- VHS
-  - List
-  - VHS Rent and Return option
-- List of Rentals
+### Vhs
 
-## Nice to haves TODO:
-1. Add Swagger ✅
-2. Implement JWT authentication ✅
-3. Add user roles and protect endpoints ✅
-4. Set up a better migration and preloading tool
-5. Dockerize the app ✅
-6. Write integration tests using an in-memory db
+| id | name                                               | description                                                                                                           |
+|----|----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| 1  | The Lord of the Rings - The Fellowship od the Ring | Frodo, a hobbit, embarks on a quest to destroy a powerful ring, joined by a diverse fellowship facing many dangers.   |
+| 2  | The Lord of the Rings - The Two Towers             | Frodo and Sam journey to Mordor while Aragorn, Legolas, and Gimli aid Rohan against Saruman's forces in epic battles. |
+| 3  | The Lord of the Rings - The Return of the King     | Frodo and Sam reach Mount Doom, while Aragorn leads the final battle against Sauron's forces to save Middle-earth.    |
 
-# Guidance:
+### Users
 
+| id | email             | roles       |
+|----|-------------------|-------------|
+| 1  | user1@example.com | USER        |
+| 2  | user2@example.com | USER        |
+| 3  | user3@example.com | USER, ADMIN |
 
-## Setup development environment
-### Linux
+### Rental
 
-1. Install Java JDK 14 or higher : http://jdk.java.net/14/
-2. Install Maven 3.6.0 or higher: https://maven.apache.org/install.html
-3. Install Git: https://www.atlassian.com/git/tutorials/install-git
-4. Install IntelliJ IDEA CE: https://www.jetbrains.com/idea/download
-5. Postman: https://www.postman.com/
+| id | start_date  | end_date    | returned_at | user_id | vhs_id |
+|----|-------------|-------------|-------------|---------|--------|
+| 1  | NOW         | NOW + 7 DAY | null        | 1       | 3      |
+| 2  | NOW - 4 DAY | NOW - 1 DAY | NOW - 1 DAY | 1       | 2      |
+| 3  | NOW - 8 DAY | NOW - 5 DAY | NOW - 6 DAY | 1       | 1      |
+| 4  | NOW + 8 DAY | NOW + 9 DAY | null        | 2       | 3      |
+| 5  | NOW + 8 DAY | NOW + 9 DAY | null        | 2       | 2      |
+| 6  | NOW + 8 DAY | NOW + 9 DAY | null        | 2       | 1      |
 
+### ADMIN login
+Some endpoints require the ADMIN role to activate. 
+In order to obtain login as an admin, please use the following credentials from the seeded database:
+```
+email: user3@example.com
+password: truenorth1950
+```
 
-### Windows
+## Running the app
+### Production
+```shell
+docker-compose up
+```
 
-1. Install Java JDK 14 or higher: http://jdk.java.net/14/
-2. Install Maven 3.6.3 or higher: https://maven.apache.org/install.html
-3. Install Git: https://www.atlassian.com/git/tutorials/install-git
-4. Install IntelliJ IDEA CE: https://www.jetbrains.com/idea/download
-5. Postman: https://www.postman.com/
+### Development
+This will generate the public and private key for JWT operations, so make sure you also have `openssl` installed. 
+It should be available by default on Mac.
 
+**Running from the shell**
+```shell
+sh run_dev.sh
+```
 
-### Setup your account and repository
-1. Setup GitHub account
-2. Checkout repository with assignment
-3. Fork your own repository
-4. Create your own branch
-5. Add your mentor as member to your repository with role Maintainer
+**Running from the IDE**
+Before running from the IDE, please execute the following command in your terminal:
+```shell
+sh generate_keys.sh
+```
+Also, before running, add 
+```shell
+--spring.profiles.active=development
+```
+as a run argument.
 
-### Spring Initializr
+## Sending requests
+### Endpoints
+The docs can be found at the `/api/docs` path, and be accessible from your browser.
 
-Visit the Spring Initializr to generate a new project with the required dependencies (Spring Web, Spring Data, ....).
-https://spring.io/guides/gs/spring-boot/
-
-### Books
-- Spring Introduction https://www.baeldung.com/spring-intro
-- https://start.spring.io/
-- https://www.manning.com/books/spring-boot-in-action
-
+### Postman
+In the root folder you can find the [Postman collection](VHS-LAB.postman_collection.json). 
+Import it into Postman and start sending requests. The token should be prepopulated for endpoints that require it, 
+just make sure to sign up or login first.
