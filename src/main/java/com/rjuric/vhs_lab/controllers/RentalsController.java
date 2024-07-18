@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,15 +28,11 @@ import java.util.List;
 
 @Tag(name = "Rentals controller")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/rentals")
 public class RentalsController {
 
     private final RentalsService service;
-
-    @Autowired
-    public RentalsController(RentalsService service) {
-        this.service = service;
-    }
 
     @Operation(summary = "Get a list of all rentals.", description = "Returns a list of all rentals.")
     @GetMapping

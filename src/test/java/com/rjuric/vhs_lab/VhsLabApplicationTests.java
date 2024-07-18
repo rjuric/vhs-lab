@@ -3,7 +3,6 @@ package com.rjuric.vhs_lab;
 import com.rjuric.vhs_lab.util.exception_handlers.GlobalExceptionHandler;
 import com.rjuric.vhs_lab.util.exception_handlers.VhsControllerExceptionHandler;
 import com.rjuric.vhs_lab.util.responses.AuthenticationResponse;
-import com.rjuric.vhs_lab.util.responses.GenericHttpErrorResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 
@@ -13,13 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;

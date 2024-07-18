@@ -28,17 +28,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ValidationErrorResponse> handleException(MethodArgumentNotValidException exc, Locale locale) {
         log.error("VALIDATION ERROR -> {}", exc.getMessage());
 
-        ValidationErrorResponse response = new ValidationErrorResponse();
-
-        List<String> mapped = exc
+        List<String> mappedFields = exc
                 .getFieldErrors()
                 .stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .toList();
 
-        response.setMessage(messageSource.getMessage("validation.failed", null, locale));
-        response.setFields(mapped);
-        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        ValidationErrorResponse response = ValidationErrorResponse.builder()
+                .message(messageSource.getMessage("validation.failed", null, locale))
+                .status(HttpStatus.BAD_REQUEST.value())
+                .fields(mappedFields)
+                .build();
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
@@ -47,11 +47,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<GenericHttpErrorResponse> handleException(UserNotFoundException exc, Locale locale) {
         log.error("USER NOT FOUND ERROR -> {}", exc.getMessage());
 
-        return ResponseEntity
-                .badRequest()
-                .body(GenericHttpErrorResponse.builder()
-                        .message(messageSource.getMessage("user.notFound", null, locale))
-                        .status(HttpStatus.BAD_REQUEST.value())
-                        .build());
+        GenericHttpErrorResponse response = GenericHttpErrorResponse.builder()
+                .message(messageSource.getMessage("user.notFound", null, locale))
+                .status(HttpStatus.BAD_REQUEST.value())
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

@@ -25,10 +25,10 @@ public class VhsControllerExceptionHandler {
     public ResponseEntity<GenericHttpErrorResponse> handleException(VhsNotFoundException exc, Locale locale) {
         log.error("VHS ERROR -> {}", exc.getMessage());
 
-        GenericHttpErrorResponse response = new GenericHttpErrorResponse();
-
-        response.setMessage(messageSource.getMessage(exc.getMessage(), null, locale));
-        response.setStatus(HttpStatus.NOT_FOUND.value());
+        GenericHttpErrorResponse response = GenericHttpErrorResponse.builder()
+                .message(messageSource.getMessage(exc.getMessage(), null, locale))
+                .status(HttpStatus.NOT_FOUND.value())
+                .build();
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }

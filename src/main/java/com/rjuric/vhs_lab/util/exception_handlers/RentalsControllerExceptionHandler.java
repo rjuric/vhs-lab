@@ -5,6 +5,7 @@ import com.rjuric.vhs_lab.util.errors.AlreadyRentedException;
 import com.rjuric.vhs_lab.util.errors.RentalNotFoundException;
 import com.rjuric.vhs_lab.util.errors.RentalNotFoundOrAlreadyReturnedException;
 import com.rjuric.vhs_lab.util.responses.GenericHttpErrorResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -17,24 +18,20 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.Locale;
 
 @Slf4j
+@RequiredArgsConstructor
 @RestControllerAdvice(assignableTypes = {RentalsController.class})
 public class RentalsControllerExceptionHandler {
 
     private final MessageSource messageSource;
 
-    @Autowired
-    public RentalsControllerExceptionHandler(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
-
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(AlreadyRentedException exc, Locale locale) {
         logError(exc);
 
-        GenericHttpErrorResponse response = new GenericHttpErrorResponse();
-
-        response.setMessage(messageSource.getMessage(exc.getMessage(), null, locale));
-        response.setStatus(HttpStatus.CONFLICT.value());
+        GenericHttpErrorResponse response = GenericHttpErrorResponse.builder()
+                .message(messageSource.getMessage(exc.getMessage(), null, locale))
+                .status(HttpStatus.CONFLICT.value())
+                .build();
 
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
@@ -43,10 +40,10 @@ public class RentalsControllerExceptionHandler {
     public ResponseEntity<GenericHttpErrorResponse> handleException(RentalNotFoundException exc, Locale locale) {
         logError(exc);
 
-        GenericHttpErrorResponse response = new GenericHttpErrorResponse();
-
-        response.setMessage(messageSource.getMessage(exc.getMessage(), null, locale));
-        response.setStatus(HttpStatus.NOT_FOUND.value());
+        GenericHttpErrorResponse response = GenericHttpErrorResponse.builder()
+                .message(messageSource.getMessage(exc.getMessage(), null, locale))
+                .status(HttpStatus.NOT_FOUND.value())
+                .build();
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
@@ -58,10 +55,10 @@ public class RentalsControllerExceptionHandler {
     ) {
         logError(exc);
 
-        GenericHttpErrorResponse response = new GenericHttpErrorResponse();
-
-        response.setMessage(messageSource.getMessage(exc.getMessage(), null, locale));
-        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        GenericHttpErrorResponse response = GenericHttpErrorResponse.builder()
+                .message(messageSource.getMessage(exc.getMessage(), null, locale))
+                .status(HttpStatus.BAD_REQUEST.value())
+                .build();
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
@@ -70,10 +67,10 @@ public class RentalsControllerExceptionHandler {
     public ResponseEntity<GenericHttpErrorResponse> handleException(DataIntegrityViolationException exc, Locale locale) {
         logError(exc);
 
-        GenericHttpErrorResponse response = new GenericHttpErrorResponse();
-
-        response.setMessage(messageSource.getMessage("common.badRequest", null, locale));
-        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        GenericHttpErrorResponse response = GenericHttpErrorResponse.builder()
+                .message(messageSource.getMessage("common.badRequest", null, locale))
+                .status(HttpStatus.BAD_REQUEST.value())
+                .build();
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }

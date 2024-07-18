@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,15 +27,11 @@ import java.util.List;
 
 @Tag(name = "Vhs controller")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/vhs")
 public class VhsController {
 
     private final VhsService service;
-
-    @Autowired
-    public VhsController(VhsService service) {
-        this.service = service;
-    }
 
     @Operation(summary = "Get all of the Vhs in the system.", description = "Returns a list of all the Vhs.")
     @ApiResponse(responseCode = "200", description = "Successfully fetched.")
