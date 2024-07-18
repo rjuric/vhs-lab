@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ValidationErrorResponse> handleException(MethodArgumentNotValidException exc, Locale locale) {
-        log.error("VALIDATION ERROR: {}", exc.getMessage());
+        log.error("VALIDATION ERROR -> {}", exc.getMessage());
 
         ValidationErrorResponse response = new ValidationErrorResponse();
 
@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(UserNotFoundException exc, Locale locale) {
-        log.error("USER NOT FOUND ERROR: {}", exc.getMessage());
+        log.error("USER NOT FOUND ERROR -> {}", exc.getMessage());
 
         return ResponseEntity
                 .badRequest()

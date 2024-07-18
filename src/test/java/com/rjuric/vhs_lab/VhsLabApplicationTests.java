@@ -3,6 +3,7 @@ package com.rjuric.vhs_lab;
 import com.rjuric.vhs_lab.util.exception_handlers.GlobalExceptionHandler;
 import com.rjuric.vhs_lab.util.exception_handlers.VhsControllerExceptionHandler;
 import com.rjuric.vhs_lab.util.responses.AuthenticationResponse;
+import com.rjuric.vhs_lab.util.responses.GenericHttpErrorResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 
@@ -12,7 +13,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -121,7 +128,21 @@ class VhsLabApplicationTests {
             .then()
             .statusCode(404)
             .body(".", Matchers.is(Matchers.notNullValue()))
+            .body("message", Matchers.is("vhs not found"))
             .body("status", Matchers.is(404));
+
+        RestAssured.given()
+                .baseUri("http://localhost")
+                .basePath("/api")
+                .contentType(ContentType.JSON)
+                .header("Accept-language", "hr")
+                .when()
+                .get("/vhs/" + notFoundId)
+                .then()
+                .statusCode(404)
+                .body(".", Matchers.is(Matchers.notNullValue()))
+                .body("message", Matchers.is("kazeta nije pronadena"))
+                .body("status", Matchers.is(404));
     }
 
     // POST /api/vhs/{id}
@@ -180,12 +201,34 @@ class VhsLabApplicationTests {
             .basePath("/api")
             .header("Authorization", "Bearer " + token)
             .contentType(ContentType.JSON)
+            .body("{}")
             .when()
             .post("/vhs/")
             .then()
             .statusCode(400)
             .body(".", Matchers.is(Matchers.notNullValue()))
-            .body("status", Matchers.is(400));
+            .body("status", Matchers.is(400))
+            .body("message", Matchers.is("validation failed"))
+            .body("fields", Matchers.hasSize(2))
+            .body("fields", Matchers.hasItems("description should not be blank", "name should not be blank"));
+
+        RestAssured.given()
+                .baseUri("http://localhost")
+                .basePath("/api")
+                .header("Authorization", "Bearer " + token)
+                .header("Accept-language", "hr")
+                .contentType(ContentType.JSON)
+                .body("{}")
+                .when()
+                .post("/vhs/")
+                .then()
+                .statusCode(400)
+                .body(".", Matchers.is(Matchers.notNullValue()))
+                .body("status", Matchers.is(400))
+                .body("message", Matchers.is("validacija neuspjela"))
+                .body("fields", Matchers.hasSize(2))
+                .body("fields", Matchers.hasItems("description ne smije biti prazan ili null", "name ne smije biti prazan ili null"));
+
     }
 
     @Test
@@ -282,12 +325,42 @@ class VhsLabApplicationTests {
             .basePath("/api")
             .header("Authorization", "Bearer " + token)
             .contentType(ContentType.JSON)
+            .body("""
+                    {
+                    }
+                    """)
             .when()
             .put("/vhs/")
             .then()
             .statusCode(400)
             .body(".", Matchers.is(Matchers.notNullValue()))
-            .body("status", Matchers.is(400));
+            .body("status", Matchers.is(400))
+            .body("message", Matchers.is("validation failed"))
+            .body("fields", Matchers.hasItems("name should not be blank", "description should not be blank", "id is required"));
+
+        RestAssured.given()
+                .baseUri("http://localhost")
+                .basePath("/api")
+                .header("Authorization", "Bearer " + token)
+                .header("Accept-language", "hr")
+                .contentType(ContentType.JSON)
+                .body("""
+                    {
+                    }
+                    """)
+                .when()
+                .put("/vhs/")
+                .then()
+                .statusCode(400)
+                .body(".", Matchers.is(Matchers.notNullValue()))
+                .body("status", Matchers.is(400))
+                .body("message", Matchers.is("validacija neuspjela"))
+                .body("fields",
+                        Matchers.hasItems(
+                                "name ne smije biti prazan ili null",
+                                "description ne smije biti prazan ili null",
+                                "id je obavezan")
+                );
     }
 
     @Test

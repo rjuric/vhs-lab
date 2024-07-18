@@ -28,7 +28,7 @@ public class AuthControllerExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(AuthException exc, Locale locale) {
-        log.error("AUTH ERROR: {}", exc.getMessage());
+        log.error("AUTH ERROR -> {}", exc.getMessage());
 
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 
@@ -40,7 +40,7 @@ public class AuthControllerExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(UserNotFoundException exc, Locale locale) {
-        log.error("AUTH ERROR: {}", exc.getMessage());
+        log.error("AUTH ERROR -> {}", exc.getMessage());
 
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 
@@ -52,7 +52,7 @@ public class AuthControllerExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<GenericHttpErrorResponse> handleException(DataIntegrityViolationException exc, Locale locale) {
-        log.error("AUTH ERROR: {}", exc.getMessage());
+        log.error("AUTH ERROR -> {}", exc.getMessage());
 
         GenericHttpErrorResponse response = new GenericHttpErrorResponse();
 

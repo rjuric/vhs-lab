@@ -79,6 +79,6 @@ public class RentalsControllerExceptionHandler {
     }
 
     private void logError(RuntimeException exception) {
-        log.error("RENTALS ERROR: {}", exception.getMessage());
+        log.error("RENTALS ERROR -> {}", exception.getMessage());
     }
 }
